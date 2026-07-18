@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Mare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #050509;
+      --pink: #f7c6d9;
+      --yellow: #ffe58a;
+      --purple: #d7c6ff;
+      --text: #fdf9ff;
+      --muted: #b9adc9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1b1024 0, #050509 45%, #020203 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 5, 9, 0.8);
+      border-bottom: 1px solid rgba(247, 198, 217, 0.2);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: var(--pink);
+    }
+
+    .logo span {
+      color: var(--yellow);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      border-color: rgba(247, 198, 217, 0.6);
+      background: rgba(247, 198, 217, 0.08);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Hero / Welcome */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-text h1 {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-text h1 span {
+      background: linear-gradient(90deg, var(--pink), var(--yellow), var(--purple));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text p {
+      margin-top: 0.75rem;
+      color: var(--muted);
+      max-width: 32rem;
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(215, 198, 255, 0.5);
+      background: rgba(215, 198, 255, 0.08);
+    }
+
+    .hero-actions {
+      margin-top: 1.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: #050509;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      border-color: rgba(247, 198, 217, 0.5);
+      background: rgba(5, 5, 9, 0.7);
+      color: var(--pink);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(247, 198, 217, 0.08);
+    }
+
+    .hero-art {
+      border-radius: 1.5rem;
+      padding: 1.25rem;
+      background: radial-gradient(circle at top left, rgba(247, 198, 217, 0.18), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(215, 198, 255, 0.18), transparent 55%);
+      border: 1px solid rgba(247, 198, 217, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-art-inner {
+      border-radius: 1rem;
+      border: 1px dashed rgba(247, 198, 217, 0.4);
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .hero-art-tile {
+      border-radius: 0.75rem;
+      background: rgba(5, 5, 9, 0.9);
+      border: 1px solid rgba(215, 198, 255, 0.35);
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .hero-art-label {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 1rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* Flowing gallery preview */
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .flow-gallery {
+      margin-bottom: 3rem;
+    }
+
+    .flow-row {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .flow-row::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .flow-row::-webkit-scrollbar-track {
+      background: rgba(5, 5, 9, 0.8);
+    }
+
+    .flow-row::-webkit-scrollbar-thumb {
+      background: rgba(247, 198, 217, 0.6);
+      border-radius: 999px;
+    }
+
+    .flow-card {
+      min-width: 160px;
+      height: 110px;
+      border-radius: 0.9rem;
+      background: linear-gradient(135deg, rgba(247, 198, 217, 0.2), rgba(215, 198, 255, 0.2));
+      border: 1px solid rgba(247, 198, 217, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #050509;
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .flow-footer {
+      margin-top: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .flow-footer p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 26rem;
+    }
+
+    /* Sections */
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    section h2 span {
+      color: var(--pink);
+    }
+
+    section p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 34rem;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 800px) {
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border-radius: 1rem;
+      border: 1px solid rgba(247, 198, 217, 0.25);
+      background: rgba(5, 5, 9, 0.85);
+      padding: 1.25rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+      color: var(--pink);
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .card-list {
+      margin-top: 0.75rem;
+      display: grid;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(215, 198, 255, 0.5);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--yellow);
+    }
+
+    .shop-items {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    .shop-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .shop-item-title {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .shop-item-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .btn-buy {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(247, 198, 217, 0.7);
+      background: rgba(247, 198, 217, 0.12);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-buy:hover {
+      background: rgba(247, 198, 217, 0.22);
+    }
+
+    .contact-note {
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .contact-note a {
+      color: var(--yellow);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+    }
+
+    .about-body {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 40rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(247, 198, 217, 0.2);
+      padding-top: 1.5rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    footer span {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="logo">HAPPY <span>MARE</span></div>
+      <div class="nav-links">
+        <a href="#welcome">Welcome</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#pdfs">PDF Shop</a>
+        <a href="#signs">Signs</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Welcome / Hero -->
+    <section id="welcome" class="hero">
+      <div class="hero-text">
+        <h1>Welcome to <span>Happy Mare</span></h1>
+        <p>
+          A little corner of the internet for dreamy art, printable magic, and hand‑painted signs
+          that bring color to everyday spaces.
+        </p>
+
+        <div class="hero-tags">
+          <div class="tag">Digital Art</div>
+          <div class="tag">Printable PDFs</div>
+          <div class="tag">Custom Signs</div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#gallery" class="btn btn-primary">View Gallery</a>
+          <a href="#pdfs" class="btn btn-ghost">Browse PDFs</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-art-inner">
+          <div class="hero-art-tile">Future artwork preview<br>(replace with your images)</div>
+          <div class="hero-art-tile">Soft black + pale pink<br>with light purple glow</div>
+          <div class="hero-art-tile">Digital card designs<br>and printable sets</div>
+          <div class="hero-art-tile">Hand‑painted business signs<br>and custom lettering</div>
+        </div>
+        <div class="hero-art-label">Happy Mare • Visual preview</div>
+      </div>
+    </section>
+
+    <!-- Flowing gallery preview -->
+    <section class="flow-gallery">
+      <div class="section-label">Gallery preview</div>
+      <div class="flow-row">
+        <div class="flow-card">Artwork 01<br>(replace with image)</div>
+        <div class="flow-card">Artwork 02<br>(replace with image)</div>
+        <div class="flow-card">Artwork 03<br>(replace with image)</div>
+        <div class="flow-card">Artwork 04<br>(replace with image)</div>
+        <div class="flow-card">Artwork 05<br>(replace with image)</div>
+      </div>
+      <div class="flow-footer">
+        <p>
+          A flowing glimpse of the Happy Mare gallery. Once your images are uploaded,
+          these cards can become real previews of your work.
+        </p>
+        <a href="#gallery" class="btn btn-ghost">Go to full gallery</a>
+      </div>
+    </section>
+
+    <!-- Gallery section -->
+    <section id="gallery">
+      <h2><span>Gallery</span> — selected works</h2>
+      <p>
+        A growing collection of pieces, from digital illustrations and card designs to
+        painted signage and experimental color studies.
+      </p>
+
+      <div class="grid-two" style="margin-top: 1.5rem;">
+        <div class="card">
+          <h3>Digital & printable art</h3>
+          <p>
+            Once your images are uploaded to the <code>images/</code> folder, this section can
+            showcase them in a grid or carousel.
+          </p>
+          <div class="card-list">
+            <span>• Soft black backgrounds with pale pink and light purple accents</span>
+            <span>• Pieces designed for cards, prints, and digital downloads</span>
+            <span>• Seasonal sets, collections, and themed bundles</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>How to add your art</h3>
+          <div class="card-list">
+            <span>1. Upload your images into an <code>images</code> folder in this repo.</span>
+            <span>2. Replace the placeholder text and cards with real <code>&lt;img&gt;</code> tags.</span>
+            <span>3. Keep high‑resolution originals safe; display web‑friendly versions here.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PDFs / Shop -->
+    <section id="pdfs">
+      <h2><span>PDFs to buy</span> — digital magic</h2>
+      <p>
+        Printable art, card sets, and digital collections you can download, print, and share.
+        Each PDF is created with care and meant to live in your spaces, journals, and gifts.
+      </p>
+
+      <div class="grid-two" style="margin-top: 1.5rem;">
+        <div class="card">
+          <h3>Featured PDFs</h3>
+          <div class="shop-items">
+            <div class="shop-item">
+              <div>
+                <div class="shop-item-title">Soft Sky Card Pack</div>
+                <div class="shop-item-meta">Set of printable cards in black, pale pink, yellow, and light purple.</div>
+              </div>
+              <button class="btn-buy">
+                Buy PDF
+              </button>
+            </div>
+
+            <div class="shop-item">
+              <div>
+                <div class="shop-item-title">Happy Mare Mini Collection</div>
+                <div class="shop-item-meta">A curated bundle of art pieces formatted for easy printing.</div>
+              </div>
+              <button class="btn-buy">
+                Buy PDF
+              </button>
+            </div>
+
+            <div class="shop-item">
+              <div>
+                <div class="shop-item-title">Business Sign Concepts (PDF)</div>
+                <div class="shop-item-meta">Sample layouts and color ideas for custom painted signs.</div>
+              </div>
+              <button class="btn-buy">
+                Buy PDF
+              </button>
+            </div>
+          </div>
+          <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted);">
+            When you’re ready, connect these buttons to Gumroad or Ko‑fi links so people can purchase and
+            instantly download your PDFs.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>How buying works</h3>
+          <div class="card-list">
+            <span>• Each “Buy PDF” button can link to a Gumroad or Ko‑fi product.</span>
+            <span>• Customers pay securely and receive the file automatically.</span>
+            <span>• Your GitHub Pages site becomes the storefront and gallery.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signs / business work -->
+    <section id="signs">
+      <h2><span>Signs for businesses</span> — hand‑painted & custom</h2>
+      <p>
+        Happy Mare also lives off‑screen: hand‑painted signs, lettering, and visual accents
+        for cafés, shops, studios, and small businesses.
+      </p>
+
+      <div class="grid-two" style="margin-top: 1.5rem;">
+        <div class="card">
+          <h3>What I can paint</h3>
+          <div class="card-list">
+            <span>• Window lettering and seasonal messages</span>
+            <span>• Menu boards and chalkboard art</span>
+            <span>• Directional signage and event boards</span>
+            <span>• Custom color palettes to match your brand</span>
+          </div>
+          <p class="contact-note">
+            Interested in a sign or mural? Reach out to discuss ideas, sizing, and pricing:
+            <br>
+            <a href="mailto:marenellisart@gmail.com">marenellisart@gmail.com</a>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>How to start a project</h3>
+          <div class="card-list">
+            <span>1. Send a brief description of your space and what you’d like painted.</span>
+            <span>2. Share any brand colors, logos, or inspiration images.</span>
+            <span>3. We’ll talk through options, timelines, and a custom quote.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / story -->
+    <section id="about">
+      <h2><span>My story</span> — the heart of Happy Mare</h2>
+      <p>
+        A little context for the person behind the colors, cards, and signs.
+      </p>
+
+      <div class="about-body">
+        <p>
+          Happy Mare is a space for art that feels like a deep breath — soft palettes, bold
+          moments, and pieces that live in everyday life. From digital cards and printable
+          collections to hand‑painted signs for local businesses, this work is about making
+          ordinary spaces feel a little more magical.
+        </p>
+        <p style="margin-top: 0.75rem;">
+          This site will grow as I upload more pieces, stories, and offerings. For now, think
+          of it as an evolving portfolio and shop: a place to see what I create, support my
+          work through digital downloads, and connect if you’d like a custom sign or project.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Happy Mare — All rights reserved.</span>
+      <span>Art, PDFs, and signs by an Austin‑based artist.</span>
+    </footer>
+  </main>
+</body>
+</html>
